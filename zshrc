@@ -72,9 +72,26 @@ alias nogit="disable_git_prompt_info; compdef -d git"
 alias nog="nogit"
 alias npm_bin='PATH=`pwd`/node_modules/.bin:$PATH; rehash'
 
-PATH=/Users/matteo/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:$PATH #:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin:$PATH
-export MANPATH=`/usr/bin/manpath`
-export MANPATH=/opt/local/share/man:$MANPATH
+UNAME=`uname`
+
+if [ ${UNAME} = "Darwin" ]; then
+	PATH=/Users/matteo/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:$PATH #:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin:$PATH
+	export MANPATH=`/usr/bin/manpath`
+	export MANPATH=/opt/local/share/man:$MANPATH
+	export LIBRARY_PATH=/opt/local/lib
+	export C_INCLUDE_PATH=/opt/local/include/
+	export CPLUS_INCLUDE_PATH=/opt/local/include/
+	#export DYLD_LIBRARY_PATH=/Users/rionda/Documents/uni/code/lib/:/Users/rionda/ImageMagick-6.6.7/lib
+	export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib
+	export CXX=clang++
+fi
+
+if [ ${UNAME} = "FreeBSD" ]; then
+	export CXX=clang++39
+	export CC=clang39
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/llvm39/lib/
+fi
+
 export EDITOR=vim
 export VISUAL=vim
 export PAGER=less
@@ -85,15 +102,14 @@ export CLICOLOR=1
 export CLICOLORS=1
 #export LSCOLORS gxBxhxDxfxhxhxhxhxcxcx
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD # solarized?
-#alias ls='ls -FG' # for BSD ls
-alias ls='ls --color=auto -F'
+
+if [ ${UNAME} = "FreeBSD" ]; then
+	alias ls='ls -FG' # for BSD ls
+	#alias gvim='vim'
+else
+	alias ls='ls --color=auto -F'
+fi
 export RSYNC_RSH=ssh
-export LIBRARY_PATH=/opt/local/lib
-export C_INCLUDE_PATH=/opt/local/include/
-export CPLUS_INCLUDE_PATH=/opt/local/include/
-#export DYLD_LIBRARY_PATH=/Users/rionda/Documents/uni/code/lib/:/Users/rionda/ImageMagick-6.6.7/lib
-export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib
-export CXX=clang++
 #export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
 #export HADOOP_HOME /Users/rionda/hadoop-0.20.205.0
 #export PATH=/Users/rionda/hadoop-0.20.205.0/bin:$PATH
@@ -126,8 +142,10 @@ export SVN_EDITOR="vim --noplugin"
 #fi
 
 export GPG_TTY=$(tty)
-gpg-connect-agent -q /bye
-SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+if [ ! -n "$SSH_TTY" ]; then
+	gpg-connect-agent -q /bye
+	SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+fi
 
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
