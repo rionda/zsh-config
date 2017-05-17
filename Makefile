@@ -1,5 +1,5 @@
 TARGETS = $(HOME)/.zshrc $(HOME)/.oh-my-zsh
-SHELL = /bin/bash
+SHELL = /bin/sh
 CWD = $(shell pwd)
 
 define check_file
