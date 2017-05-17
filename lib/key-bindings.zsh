@@ -88,6 +88,6 @@ bindkey "^[m" copy-prev-shell-word
 alias ←="pushd -q -1"
 alias →="pushd -q +0"
 alias ↑="cd .."
-bindkey -s '^u' "↑\n"
+# bindkey -s '^u' "↑\n"
 bindkey -s '^b' "←\n"
 bindkey -s '^f' "→\n"
