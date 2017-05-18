@@ -146,6 +146,10 @@ if [ ! -n "$SSH_TTY" ]; then
 	gpg-connect-agent -q /bye
 	SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 fi
+if [ -S "$SSH_AUTH_SOCK" ] && [ ! -h "$SSH_AUTH_SOCK" ]; then
+	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
