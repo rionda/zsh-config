@@ -25,6 +25,7 @@ plugins=(github cap gem lol zsh-syntax-highlighting bundler heroku vim)
 
 source /etc/profile
 source $ZSH/oh-my-zsh.sh
+zstyle :omz:plugins:ssh-agent agent-forwarding on
 
 unsetopt nomatch
 unsetopt correctall
