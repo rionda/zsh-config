@@ -151,6 +151,24 @@ if [ -S "$SSH_AUTH_SOCK" ] && [ ! -h "$SSH_AUTH_SOCK" ]; then
 fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 
+if [ `hostname` = "pompeii" ]; then
+	# Define the shell-independent environment commands. See hooks(7) for more
+	# information.
+	setenvvar () { eval $1=\"$2\"; export $1; }
+	setenvifnot () { if eval [ -z \"\$$1\" ]; then eval $1=\"$2\"; export $1; fi; }
+	pathappend () { if eval expr ":\$$1::" : ".*:$2:.*" >/dev/null 2>&1; then true; else eval $1=\$$1:$2; fi; }
+	pathappendifdir () { if [ -d "$2" ]; then pathappend $*; fi; }
+	pathprepend () { if eval expr ":\$$1::" : ".*:$2:.*" >/dev/null 2>&1; then true; else eval $1=$2:\$$1; fi; }
+	pathprependifdir () { if [ -d "$2" ]; then pathprepend $*; fi; }
+	shellcmd () { _cmd=$1; shift; eval "$_cmd () { command $* \"\$@\"; }"; }
+	sourcefile () { if [ -f "$1" ]; then . $1; fi; }
+	sourcefile ~/.environment
+	# Run the coursehooks.
+	sourcefile /u/system/hooks/sh/simple-hooks
+	# Set tty options.
+	stty sane
+	ulimit -c unlimited
+fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
 cd . # to rvm reload
