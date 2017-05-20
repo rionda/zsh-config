@@ -84,6 +84,7 @@ if [ ${UNAME} = "Darwin" ]; then
 	#export DYLD_LIBRARY_PATH=/Users/rionda/Documents/uni/code/lib/:/Users/rionda/ImageMagick-6.6.7/lib
 	export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib
 	export CXX=clang++
+	alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
 fi
 
 HOSTNAME=`hostname`
@@ -102,7 +103,6 @@ export VISUAL=vim
 export PAGER=less
 export LESS=XR
 export GREP_OPTIONS='--color=auto'
-#alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
 export CLICOLOR=1
 export CLICOLORS=1
 #export LSCOLORS gxBxhxDxfxhxhxhxhxcxcx
@@ -110,41 +110,12 @@ export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD # solarized?
 
 if [ ${UNAME} = "FreeBSD" ]; then
 	alias ls='ls -FG' # for BSD ls
-	#alias gvim='vim'
 else
 	alias ls='ls --color=auto -F'
 fi
 export RSYNC_RSH=ssh
-#export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
-#export HADOOP_HOME /Users/rionda/hadoop-0.20.205.0
-#export PATH=/Users/rionda/hadoop-0.20.205.0/bin:$PATH
-#export CLASSPATH=.:/Users/rionda/hadoop-0.20.205.0/hadoop-core-0.20.205.0.jar:/Users/rionda/mahout/trunk/core/target/mahout-core-0.7-SNAPSHOT.jar
-
-#export SVN_ROOT svn+ssh://mapreduce@verona.dei.unipd.it/svn
 export SVN_RSH=ssh
 export SVN_EDITOR="vim --noplugin"
-
-#SSH_ENV="$HOME/.ssh/environment"
-#
-#function start_agent {
-#	killall ssh-agent
-#	echo -n "Initialising new SSH agent..."
-#	ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-#	echo succeeded
-#	chmod 600 "${SSH_ENV}"
-#	. "${SSH_ENV}" > /dev/null
-#	#ssh-add;
-#}
-#
-## Source SSH settings, if applicable
-#if [ -f "${SSH_ENV}" ]; then
-#	. "${SSH_ENV}" > /dev/null
-#	ps ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-#		start_agent;
-#	}
-#else
-#		start_agent;
-#fi
 
 export GPG_TTY=$(tty)
 if [ ! -n "$SSH_TTY" ]; then
