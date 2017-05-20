@@ -87,20 +87,13 @@ if [ ${UNAME} = "Darwin" ]; then
 fi
 
 set_clang_version () {
-	if [ ! `which clang++$1` ]; then
-		export CXX=clang++$1
+	CLANGXX=`which clang++$1`
+	if [ $? -eq 0 ]; then
+		export CXX=${CLANGXX}
 	fi
-	if [ ! `which clang$1` ]; then
-		export CC=clang$1
-	fi
-	if [ -d /usr/local/llvm$1/lib/ ]; then
-		if [ "${LD_LIBRARY_PATH}x" != x ]; then
-			if [ `echo $LD_LIBRARY_PATH | grep -q llvm$1` ]; then
-				export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/llvm$1/lib/
-			fi
-		else
-			export LD_LIBRARY_PATH=/usr/local/llvm$1/lib/
-		fi
+	CLANG=`which clang$1`
+	if [ $? -eq 0 ]; then
+		export CC=${CLANG}
 	fi
 }
 
