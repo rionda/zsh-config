@@ -87,15 +87,29 @@ if [ ${UNAME} = "Darwin" ]; then
 	alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
 fi
 
-HOSTNAME=`hostname`
+set_clang_version () {
+	if [ ! `which clang++$1` ]; then
+		export CXX=clang++$1
+	fi
+	if [ ! `which clang$1` ]; then
+		export CC=clang$1
+	fi
+	if [ -d /usr/local/llvm$1/lib/ ]; then
+		if [ "${LD_LIBRARY_PATH}x" != x ]; then
+			if [ `echo $LD_LIBRARY_PATH | grep -q llvm$1` ]; then
+				export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/llvm$1/lib/
+			fi
+		else
+			export LD_LIBRARY_PATH=/usr/local/llvm$1/lib/
+		fi
+	fi
+}
+
+HOSTNAME=`hostname | cut -d . -f 1`
 if [ ${HOSTNAME} = "fantasma" ]; then
-	export CXX=clang++39
-	export CC=clang39
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/llvm39/lib/
+	set_clang_version 39
 elif [ ${HOSTNAME} = "triton" ]; then
-	export CXX=clang++40
-	export CC=clang40
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/llvm40/lib/
+	set_clang_version 40
 fi
 
 export EDITOR=vim
