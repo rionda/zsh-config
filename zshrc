@@ -86,10 +86,29 @@ if [ ${UNAME} = "Darwin" ]; then
 	export CXX=clang++
 fi
 
-if [ ${UNAME} = "FreeBSD" ]; then
-	export CXX=clang++39
-	export CC=clang39
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/llvm39/lib/
+set_clang_version () {
+	if [ ! `which clang++$1` ]; then
+		export CXX=clang++$1
+	fi
+	if [ ! `which clang$1` ]; then
+		export CC=clang$1
+	fi
+	if [ -d /usr/local/llvm$1/lib/ ]; then
+		if [ "${LD_LIBRARY_PATH}x" != x ]; then
+			if [ `echo $LD_LIBRARY_PATH | grep -q llvm$1` ]; then
+				export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/llvm$1/lib/
+			fi
+		else
+			export LD_LIBRARY_PATH=/usr/local/llvm$1/lib/
+		fi
+	fi
+}
+
+HOSTNAME=`hostname | cut -d . -f 1`
+if [ ${HOSTNAME} = "fantasma" ]; then
+	set_clang_version 39
+elif [ ${HOSTNAME} = "triton" ]; then
+	set_clang_version 40
 fi
 
 export EDITOR=vim
@@ -97,7 +116,6 @@ export VISUAL=vim
 export PAGER=less
 export LESS=XR
 export GREP_OPTIONS='--color=auto'
-#alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
 export CLICOLOR=1
 export CLICOLORS=1
 #export LSCOLORS gxBxhxDxfxhxhxhxhxcxcx
@@ -105,41 +123,12 @@ export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD # solarized?
 
 if [ ${UNAME} = "FreeBSD" ]; then
 	alias ls='ls -FG' # for BSD ls
-	#alias gvim='vim'
 else
 	alias ls='ls --color=auto -F'
 fi
 export RSYNC_RSH=ssh
-#export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
-#export HADOOP_HOME /Users/rionda/hadoop-0.20.205.0
-#export PATH=/Users/rionda/hadoop-0.20.205.0/bin:$PATH
-#export CLASSPATH=.:/Users/rionda/hadoop-0.20.205.0/hadoop-core-0.20.205.0.jar:/Users/rionda/mahout/trunk/core/target/mahout-core-0.7-SNAPSHOT.jar
-
-#export SVN_ROOT svn+ssh://mapreduce@verona.dei.unipd.it/svn
 export SVN_RSH=ssh
 export SVN_EDITOR="vim --noplugin"
-
-#SSH_ENV="$HOME/.ssh/environment"
-#
-#function start_agent {
-#	killall ssh-agent
-#	echo -n "Initialising new SSH agent..."
-#	ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-#	echo succeeded
-#	chmod 600 "${SSH_ENV}"
-#	. "${SSH_ENV}" > /dev/null
-#	#ssh-add;
-#}
-#
-## Source SSH settings, if applicable
-#if [ -f "${SSH_ENV}" ]; then
-#	. "${SSH_ENV}" > /dev/null
-#	ps ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-#		start_agent;
-#	}
-#else
-#		start_agent;
-#fi
 
 export GPG_TTY=$(tty)
 if [ ! -n "$SSH_TTY" ]; then
