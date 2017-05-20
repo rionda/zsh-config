@@ -86,10 +86,15 @@ if [ ${UNAME} = "Darwin" ]; then
 	export CXX=clang++
 fi
 
-if [ ${UNAME} = "FreeBSD" ]; then
+HOSTNAME=`hostname`
+if [ ${HOSTNAME} = "fantasma" ]; then
 	export CXX=clang++39
 	export CC=clang39
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/llvm39/lib/
+elif [ ${HOSTNAME} = "triton" ]; then
+	export CXX=clang++40
+	export CC=clang40
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/llvm40/lib/
 fi
 
 export EDITOR=vim
