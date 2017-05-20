@@ -84,7 +84,6 @@ if [ ${UNAME} = "Darwin" ]; then
 	#export DYLD_LIBRARY_PATH=/Users/rionda/Documents/uni/code/lib/:/Users/rionda/ImageMagick-6.6.7/lib
 	export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib
 	export CXX=clang++
-	alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
 fi
 
 set_clang_version () {
