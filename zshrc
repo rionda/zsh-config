@@ -109,7 +109,7 @@ fi
 export EDITOR=vim
 export VISUAL=vim
 export PAGER=less
-export LESS=XR
+export LESS=XFR
 export GREP_OPTIONS='--color=auto'
 export CLICOLOR=1
 export CLICOLORS=1
