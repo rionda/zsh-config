@@ -102,6 +102,8 @@ if [ ${HOSTNAME} = "fantasma" ]; then
 	set_clang_version 39
 elif [ ${HOSTNAME} = "triton" ]; then
 	set_clang_version 40
+elif [ ${HOSTNAME} = "rionda" ]; then
+	set_clang_version 40
 fi
 
 export EDITOR=vim
