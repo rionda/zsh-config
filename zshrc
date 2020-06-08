@@ -2,7 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
+# Look in ~/.oh-my-zsh/themes/ (or a custom dir)
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 export ZSH_THEME="gentoo-rionda"
@@ -10,8 +10,10 @@ export ZSH_THEME="gentoo-rionda"
 # Set to this to use case-sensitive completion
 # export CASE_SENSITIVE="true"
 
-# Comment this out to disable weekly auto-update checks
-export DISABLE_AUTO_UPDATE="true"
+# Comment this out to disable bi-weekly auto-update checks
+#export DISABLE_AUTO_UPDATE="true"
+# Uncomment the following line to change how often to auto-update (in days).
+export UPDATE_ZSH_DAYS=1
 
 # Uncomment following line if you want to disable colors in ls
 # export DISABLE_LS_COLORS="true"
@@ -19,9 +21,18 @@ export DISABLE_AUTO_UPDATE="true"
 # Uncomment following line if you want to disable autosetting terminal title.
 # export DISABLE_AUTO_TITLE="true"
 
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+# Would you like to use another custom folder than $ZSH/custom?
+ZSH_CUSTOM=$HOME/zsh-config
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(github cap gem lol zsh-syntax-highlighting bundler heroku vim)
+plugins=(git zsh-syntax-highlighting z)
 
 source /etc/profile
 source $ZSH/oh-my-zsh.sh
@@ -130,11 +141,11 @@ export GPG_TTY=$(tty)
 if [ ! -n "$SSH_TTY" ]; then
 	gpg-connect-agent -q /bye
 	SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+	if [ -S "$SSH_AUTH_SOCK" ] && [ ! -h "$SSH_AUTH_SOCK" ]; then
+		ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+	fi
+	export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 fi
-if [ -S "$SSH_AUTH_SOCK" ] && [ ! -h "$SSH_AUTH_SOCK" ]; then
-	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-fi
-export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 
 if [ `hostname` = "pompeii" ]; then
 	# Define the shell-independent environment commands. See hooks(7) for more
@@ -159,3 +170,5 @@ fi
 cd . # to rvm reload
 
 set -o vi
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
