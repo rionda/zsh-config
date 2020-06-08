@@ -32,7 +32,7 @@ ZSH_CUSTOM=$HOME/zsh-config
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git zsh-syntax-highlighting z)
+plugins=(git macports zsh-syntax-highlighting z)
 
 source /etc/profile
 source $ZSH/oh-my-zsh.sh
