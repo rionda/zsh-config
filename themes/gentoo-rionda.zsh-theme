@@ -8,6 +8,8 @@ function prompt_char {
 # status_of_parser (for continuation lines) (specified by %_)
 # prompt_char
 PROMPT='%(!.%{$fg_bold[red]%%n@}.%{$fg_bold[green]%})%m %{$fg_bold[blue]%}%3~ $(git_prompt_info)%_$(prompt_char)%{$reset_color%} '
+
+# Right prompt: (blue,bold)[time of day in 24hr with seconds]
 RPROMPT='%{$fg_no_bold[blue]%}[%*]%{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_PREFIX="["
