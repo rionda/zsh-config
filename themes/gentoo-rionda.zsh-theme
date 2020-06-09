@@ -5,9 +5,9 @@ function prompt_char {
 
 function git_prompt {
 	if [[ "$(command git config --get oh-my-zsh.hide-status 2>/dev/null)" != "1" ]]; then
-		GIT_STATUS=$(git_prompt_status)
-		if [[ -n "${GIT_STATUS}" ]]; then
-			echo "$ZSH_THEME_GIT_PROMPT_PREFIX$(git_current_branch)$GIT_STATUS$ZSH_THEME_GIT_PROMPT_SUFFIX"
+		BRANCH=$(git_current_branch)
+		if [[ -n ${BRANCH} ]]; then
+			echo "$ZSH_THEME_GIT_PROMPT_PREFIX$BRANCH$(git_prompt_status)$ZSH_THEME_GIT_PROMPT_SUFFIX"
 		else
 			return 0
 		fi
