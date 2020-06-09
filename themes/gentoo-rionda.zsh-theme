@@ -3,11 +3,21 @@ function prompt_char {
 	if [ $UID -eq 0 ]; then echo "#"; else echo "%%"; fi
 }
 
+function git_prompt {
+	if [[ "$(command git config --get oh-my-zsh.hide-status 2>/dev/null)" != "1" ]]; then
+		GIT_STATUS=$(git_prompt_status)
+		if [[ -n "${GIT_STATUS}" ]]; then
+			echo "$ZSH_THEME_GIT_PROMPT_PREFIX$(git_current_branch)$GIT_STATUS$ZSH_THEME_GIT_PROMPT_SUFFIX"
+		else
+			return 0
+		fi
+	fi
+}
+
 # For root: (red,bold)root@hostname, For non-root: (green,bold)hostname
-# (blue,bold)last_three_components_of_pwd_with_tilde_contraction git_prompt_info
-# status_of_parser (for continuation lines) (specified by %_)
-# prompt_char
-PROMPT='%(!.%{$fg_bold[red]%%n@}.%{$fg_bold[green]%})%m %{$fg_bold[blue]%}%3~ $(git_prompt_info)%_$(prompt_char)%{$reset_color%} '
+# (blue,bold)last_three_components_of_pwd_with_tilde_contraction git_prompt
+# status_of_parser (for continuation lines) (specified by %_) prompt_char
+PROMPT='%(!.%{$fg_bold[red]%%n@}.%{$fg_bold[green]%})%m %{$fg_bold[blue]%}%3~ $(git_prompt)%_$(prompt_char)%{$reset_color%} '
 
 # Right prompt: (blue,bold)[time of day in 24hr with seconds]
 RPROMPT='%{$fg_no_bold[blue]%}[%*]%{$reset_color%}'
@@ -19,8 +29,8 @@ ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[green]%}↑"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}✗"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[cyan]%}◒"
-ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[red]%}△"
+ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[yellow]%}△"
 #ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[green]%}↪"
 ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[green]%}➜"
 ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}!!!!"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[gray]%}§"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[blue]%}§"
