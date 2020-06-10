@@ -23,6 +23,10 @@ export UPDATE_ZSH_DAYS=1
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
+unsetopt correctall # Do not correct the command line arguments arguments
+# If a pattern for filename generation has no matches, leave it unchanged in the
+# argument list (setting nomatch would print an error instead)
+unsetopt nomatch
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 #COMPLETION_WAITING_DOTS="true"
@@ -36,14 +40,58 @@ plugins=(git macports zsh-syntax-highlighting z)
 
 source /etc/profile
 source $ZSH/oh-my-zsh.sh
-zstyle :omz:plugins:ssh-agent agent-forwarding on
 
-unsetopt nomatch
-unsetopt correctall
+export EDITOR=vim
+export VISUAL=vim
+export PAGER=less
+# less(1) options: X (do not clear screen), F (automatically exit if the content
+# can fit in a single screen), R (only output colors as raw)
+export LESS=XFR
+# Use ssh for rsync and svn (I don't really use svn anymore but...)
+export RSYNC_RSH=ssh
+export SVN_RSH=ssh
 
-# Customize to your needs...
-LS_COLORS='no=00;32:fi=00:di=00;34:ln=01;36:pi=04;33:so=01;35:bd=33;04:cd=33;04:or=31;01:ex=00;32:*.rtf=00;33:*.txt=00;33:*.html=00;33:*.doc=00;33:*.pdf=00;33:*.ps=00;33:*.sit=00;31:*.hqx=00;31:*.bin=00;31:*.tar=00;31:*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.deb=00;31:*.dmg=00;36:*.jpg=00;35:*.gif=00;35:*.bmp=00;35:*.ppm=00;35:*.tga=00;35:*.xbm=00;35:*.xpm=00;35:*.tif=00;35:*.mpg=00;37:*.avi=00;37:*.gl=00;37:*.dl=00;37:*.mov=00;37:*.mp3=00;35:'
-export LS_COLORS;
+UNAME=`uname` # OS name, used later
+
+# Stuff for OS X
+if [ ${UNAME} = "Darwin" ]; then
+	# Prepend my bin directory and MacPorts directories to PATH, if needed
+	DIRS_TO_PREPEND_TO_PATH=/Users/matteo/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin
+	if [ ! `echo ${PATH} | grep -q ^${DIRS_TO_PREPEND_TO_PATH}` ]; then
+		PATH=${DIRS_TO_PREPEND_TO_PATH}:${PATH}
+	fi
+	# Add MacPorts paths as needed
+	export LIBRARY_PATH=/opt/local/lib
+	export C_INCLUDE_PATH=/opt/local/include/
+	export CPLUS_INCLUDE_PATH=/opt/local/include/
+	export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib
+	export CXX=clang++
+	export TEXINPUTS=.:/opt/local/share/texmf//:
+fi
+
+# Setup GPG and, if needed, SSH agent through GPG
+export GPG_TTY=$(tty)
+# Setup SSH
+if [ ! -n "$SSH_TTY" ]; then
+	gpg-connect-agent -q /bye # ensure that gpg-agent is running
+	SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+	if [ -S "$SSH_AUTH_SOCK" ] && [ ! -L "$SSH_AUTH_SOCK" ]; then
+		# create a link in a standardized place
+		ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+	fi
+	export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+fi
+
+# Colors and highlight
+export GREP_OPTIONS='--color=auto'
+if [ ${UNAME} = "FreeBSD" ]; then
+	export CLICOLOR=1 # for colors in ls(1) and maybe others
+	#export LSCOLORS gxBxhxDxfxhxhxhxhxcxcx
+	export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD # solarized?
+fi
+export CLICOLORS=1 # No idea, more historical stuff for colors?
+# For GNU ls(1) and zsh completion
+export LS_COLORS='no=00;32:fi=00:di=00;34:ln=01;36:pi=04;33:so=01;35:bd=33;04:cd=33;04:or=31;01:ex=00;32:*.rtf=00;33:*.txt=00;33:*.html=00;33:*.doc=00;33:*.pdf=00;33:*.ps=00;33:*.sit=00;31:*.hqx=00;31:*.bin=00;31:*.tar=00;31:*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.deb=00;31:*.dmg=00;36:*.jpg=00;35:*.gif=00;35:*.bmp=00;35:*.ppm=00;35:*.tga=00;35:*.xbm=00;35:*.xpm=00;35:*.tif=00;35:*.mpg=00;37:*.avi=00;37:*.gl=00;37:*.dl=00;37:*.mov=00;37:*.mp3=00;35:'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 ZSH_HIGHLIGHT_STYLES+=(
   default                       'none'
@@ -67,37 +115,19 @@ ZSH_HIGHLIGHT_STYLES+=(
   assign                        'none'
 )
 
-#bindkey "\e[H" beginning-of-line
-#bindkey "\e[F" end-of-line
-bindkey "\e[1;5D" backward-word
-bindkey "\e[1;5C" forward-word
-bindkey "^[OD" backward-word
-bindkey "^[OC" forward-word
+# Bindings
+set -o vi # use vi bindings
 
-alias noh="unsetopt sharehistory"
-
-unsetopt auto_name_dirs # rvm_rvmrc_cwd fix
-unset RUBYOPT
-
-alias nogit="disable_git_prompt_info; compdef -d git"
-alias nog="nogit"
-alias npm_bin='PATH=`pwd`/node_modules/.bin:$PATH; rehash'
-
-UNAME=`uname`
-
-if [ ${UNAME} = "Darwin" ]; then
-	PATH=/Users/matteo/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:$PATH #:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin:$PATH
-	export MANPATH=`/usr/bin/manpath`
-	export MANPATH=/opt/local/share/man:$MANPATH
-	export LIBRARY_PATH=/opt/local/lib
-	export C_INCLUDE_PATH=/opt/local/include/
-	export CPLUS_INCLUDE_PATH=/opt/local/include/
-	#export DYLD_LIBRARY_PATH=/Users/rionda/Documents/uni/code/lib/:/Users/rionda/ImageMagick-6.6.7/lib
-	export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib
-	export CXX=clang++
-	export TEXINPUTS=.:/opt/local/share/texmf//:
+# Aliases
+if [ ${UNAME} = "FreeBSD" ]; then
+	alias ls='ls -FG' # for BSD ls: F (display slash after dirs), G (colors)
+else
+	alias ls='ls --color=auto -F' # F (display slash after dirs)
 fi
 
+# host specific settings
+
+# Set the clang version
 set_clang_version () {
 	CLANGXX=`which clang++$1`
 	if [ $? -eq 0 ]; then
@@ -110,44 +140,18 @@ set_clang_version () {
 }
 
 HOSTNAME=`hostname | cut -d . -f 1`
-if [ ${HOSTNAME} = "fantasma" ]; then
-	set_clang_version 39
-elif [ ${HOSTNAME} = "triton" ]; then
-	set_clang_version 40
-elif [ ${HOSTNAME} = "rionda" ]; then
-	set_clang_version 40
-fi
-
-export EDITOR=vim
-export VISUAL=vim
-export PAGER=less
-export LESS=XFR
-export GREP_OPTIONS='--color=auto'
-export CLICOLOR=1
-export CLICOLORS=1
-#export LSCOLORS gxBxhxDxfxhxhxhxhxcxcx
-export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD # solarized?
-
 if [ ${UNAME} = "FreeBSD" ]; then
-	alias ls='ls -FG' # for BSD ls
-else
-	alias ls='ls --color=auto -F'
-fi
-export RSYNC_RSH=ssh
-export SVN_RSH=ssh
-export SVN_EDITOR="vim --noplugin"
-
-export GPG_TTY=$(tty)
-if [ ! -n "$SSH_TTY" ]; then
-	gpg-connect-agent -q /bye
-	SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-	if [ -S "$SSH_AUTH_SOCK" ] && [ ! -h "$SSH_AUTH_SOCK" ]; then
-		ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+	if [ ${HOSTNAME} = "fantasma" ]; then
+		set_clang_version 39
+	elif [ ${HOSTNAME} = "triton" ]; then
+		set_clang_version 40
+	elif [ ${HOSTNAME} = "rionda" ]; then
+		set_clang_version 40
 	fi
-	export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 fi
 
-if [ `hostname` = "pompeii" ]; then
+# cs.brown.edu stuff
+if [ ${HOSTNAME} = "pompeii" ]; then
 	# Define the shell-independent environment commands. See hooks(7) for more
 	# information.
 	setenvvar () { eval $1=\"$2\"; export $1; }
@@ -166,9 +170,5 @@ if [ `hostname` = "pompeii" ]; then
 	ulimit -c unlimited
 fi
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
-cd . # to rvm reload
-
-set -o vi
-
+# Integration with iterm2. Does not work in tmux.
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
