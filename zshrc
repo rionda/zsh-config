@@ -36,7 +36,12 @@ ZSH_CUSTOM=$HOME/zsh-config
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git macports zsh-syntax-highlighting z)
+plugins=(
+	git macports zsh-autosuggestions zsh-completions zsh-syntax-highlighting
+	z)
+
+autoload -U compinit && compinit # reload completion, for zsh-completions
+export ZSH_AUTOSUGGEST_USE_ASYNC=y # fetch suggestion asynchronously
 
 source /etc/profile
 source $ZSH/oh-my-zsh.sh
