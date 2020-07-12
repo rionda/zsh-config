@@ -2,12 +2,10 @@
 
 In part inspired by [Nico](https://github.com/nviennot/).
 
-## Key Bindings
+## To install
 
-`Ctrl + b` Go back in the directory location history
-`Ctrl + f` Go forward in the directory location history
-`Ctrl + u` Go up in the directory structure
-`Ctrl + k` ls
-`Alt + v` vim
+1. Clone and initialize submodules.
 
-Not ideal, I'm open to suggestions.
+2. [Install oh-my-zsh](https://ohmyz.sh/#install)
+
+3. Link `zshrc` as `~/.zshrc`.
