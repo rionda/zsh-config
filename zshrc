@@ -74,16 +74,16 @@ fi
 
 # Setup GPG and, if needed, SSH agent through GPG
 export GPG_TTY=$(tty)
-# Setup SSH
+# Setup SSH when not a remote host.
 if [ ! -n "$SSH_TTY" ]; then
 	gpg-connect-agent -q /bye # ensure that gpg-agent is running
 	SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-	if [ -S "$SSH_AUTH_SOCK" ] && [ ! -L "$SSH_AUTH_SOCK" ]; then
-		# create a link in a standardized place
-		ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-	fi
-	export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 fi
+# create a link for the SSH auth socket in a standardized place
+if [ -S "$SSH_AUTH_SOCK" ] && [ ! -L "$SSH_AUTH_SOCK" ]; then
+		ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 
 # Colors and highlight
 export GREP_OPTIONS='--color=auto'
