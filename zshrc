@@ -34,10 +34,12 @@ unsetopt nomatch
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$HOME/zsh-config
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Example format: plugins=(rails git textmate ruby lighthouse)
+# fzf install dir
+export FZF_BASE=/opt/local/share/fzf/shell
+
+# zsh-syntax-highlighting *must* be the last plugin loaded.
 plugins=(
-	git macports zsh-completions zsh_reload zsh-syntax-highlighting z)
+	colored-man-pages colorize fzf git macports vi-mode zsh-completions zsh_reload z zsh-syntax-highlighting)
 
 autoload -U compinit && compinit # reload completion, for zsh-completions
 
@@ -127,6 +129,8 @@ if [ ${UNAME} = "FreeBSD" ]; then
 else
 	alias ls='ls --color=auto -F' # F (display slash after dirs)
 fi
+alias cat=ccat # colorized cat
+alias less=cless # colorized less
 
 # host specific settings
 
