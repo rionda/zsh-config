@@ -39,7 +39,7 @@ export FZF_BASE=/opt/local/share/fzf/shell
 
 # zsh-syntax-highlighting *must* be the last plugin loaded.
 plugins=(
-	colored-man-pages colorize fzf git macports vi-mode zsh-completions zsh_reload z zsh-syntax-highlighting)
+	colored-man-pages colorize fzf git macports vi-mode sudo zsh-completions zsh_reload z zsh-syntax-highlighting)
 
 autoload -U compinit && compinit # reload completion, for zsh-completions
 
