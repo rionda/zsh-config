@@ -50,8 +50,9 @@ export EDITOR=vim
 export VISUAL=vim
 export PAGER=less
 # less(1) options: X (do not clear screen), F (automatically exit if the content
-# can fit in a single screen), R (only output colors as raw)
-export LESS=XFR
+# can fit in a single screen), R (only output colors as raw), m (long prompt),
+# E (automatically quit when reaching end-of-file)
+export LESS=XFRmE
 # Use ssh for rsync and svn (I don't really use svn anymore but...)
 export RSYNC_RSH=ssh
 export SVN_RSH=ssh
