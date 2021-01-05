@@ -37,6 +37,14 @@ ZSH_CUSTOM=$HOME/zsh-config
 # fzf install dir
 export FZF_BASE=/opt/local/share/fzf/shell
 
+# oh-my-zsh tmux plugin conf
+ZSH_TMUX_FIXTERM="true"
+ZSH_TMUX_UNICODE="true"
+ZSH_TMUX_AUTOSTART="true"
+
+# oh-my-zsh vi-mode plugin conf
+VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+
 # zsh-syntax-highlighting *must* be the last plugin loaded.
 plugins=(
 	colored-man-pages colorize fzf git macports vi-mode sudo zsh-completions zsh_reload z zsh-syntax-highlighting)
