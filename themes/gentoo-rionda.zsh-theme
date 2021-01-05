@@ -17,10 +17,13 @@ function git_prompt {
 # For root: (red,bold)root@hostname, For non-root: (green,bold)hostname
 # (blue,bold)last_three_components_of_pwd_with_tilde_contraction git_prompt
 # status_of_parser (for continuation lines) (specified by %_) prompt_char
-PROMPT='%(!.%{$fg_bold[red]%%n@}.%{$fg_bold[green]%})%m %{$fg_bold[blue]%}%3~ $(git_prompt)%_$(prompt_char)%{$reset_color%} '
+PROMPT='%(!.%{$fg_bold[red]%%n@}.%{$fg_bold[green]%})%m %{$fg_bold[blue]%}%3~ $(git_prompt)%_$(vi_mode_prompt_info)%{$reset_color%}$(prompt_char)%{$reset_color%} '
 
 # Right prompt: (blue,bold)[time of day in 24hr with seconds]
 RPROMPT='%{$fg_no_bold[blue]%}[%*]%{$reset_color%}'
+
+# Indicator of 'normal' mode for the vi-mode plugin.
+MODE_INDICATOR="%{$fg[magenta]%}©"
 
 ZSH_THEME_GIT_PROMPT_PREFIX="["
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg[blue]%}] "
