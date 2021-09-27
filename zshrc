@@ -48,7 +48,7 @@ VI_MODE_SET_CURSOR=true
 
 # zsh-syntax-highlighting *must* be the last plugin loaded.
 plugins=(
-	colored-man-pages colorize fzf git macports vi-mode sudo zsh-completions zsh_reload z zsh-syntax-highlighting)
+	colored-man-pages colorize fzf git macports vi-mode sudo zsh-autosuggestions zsh-completions zsh_reload z zsh-syntax-highlighting)
 
 autoload -U compinit && compinit # reload completion, for zsh-completions
 
