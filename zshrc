@@ -34,8 +34,10 @@ unsetopt nomatch
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$HOME/zsh-config
 
-# fzf install dir
-export FZF_BASE=/opt/local/share/fzf/shell
+# oh-my-zsh fzf plugin conf
+export FZF_BASE="/opt/local/share/fzf/shell"
+export FZF_DEFAULT_COMMAND='/opt/local/bin/rg --files --hidden --glob "!.git/*"'
+export FZF_TMUX=1
 
 # oh-my-zsh tmux plugin conf
 ZSH_TMUX_FIXTERM="true"
@@ -50,8 +52,10 @@ VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
 VI_MODE_SET_CURSOR=true
 
 # zsh-syntax-highlighting *must* be the last plugin loaded.
+# Also, some other plugin conflicts with the fzf keybindings, so fzf must be
+# loaded late
 plugins=(
-	colored-man-pages colorize dirhistory fzf git macports vi-mode sudo zsh-autosuggestions zsh-completions z zsh-syntax-highlighting)
+	colored-man-pages colorize git macports vi-mode sudo zsh-autosuggestions zsh-completions z fzf zsh-syntax-highlighting)
 
 autoload -U compinit && compinit # reload completion, for zsh-completions
 
