@@ -45,7 +45,7 @@ ZSH_TMUX_UNICODE="true"
 ZSH_TMUX_AUTOSTART="true"
 
 # oh-my-zsh zsh-autosuggestions plugin conf
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=green"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue"
 
 # oh-my-zsh vi-mode plugin conf
 VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
