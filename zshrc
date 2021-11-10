@@ -34,10 +34,14 @@ unsetopt nomatch
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$HOME/zsh-config
 
-# oh-my-zsh fzf plugin conf
+# fzf config
 export FZF_BASE="/opt/local/share/fzf/shell"
 export FZF_DEFAULT_COMMAND='/opt/local/bin/rg --files --hidden --glob "!.git/*"'
 export FZF_TMUX=1
+# macports fzf suggest using the following, but instead we use the oh-my-zsh fzf
+# plugin
+source /opt/local/share/fzf/shell/key-bindings.zsh
+source /opt/local/share/fzf/shell/completion.zsh
 
 # oh-my-zsh tmux plugin conf
 ZSH_TMUX_FIXTERM="true"
