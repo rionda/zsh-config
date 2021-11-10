@@ -40,8 +40,20 @@ export FZF_DEFAULT_COMMAND='/opt/local/bin/rg --files --hidden --glob "!.git/*"'
 export FZF_TMUX=1
 # macports fzf suggest using the following, but instead we use the oh-my-zsh fzf
 # plugin
-source /opt/local/share/fzf/shell/key-bindings.zsh
-source /opt/local/share/fzf/shell/completion.zsh
+#source /opt/local/share/fzf/shell/key-bindings.zsh
+#source /opt/local/share/fzf/shell/completion.zsh
+
+# oh-my-zsh fzf-tab plugin conf
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# preview directory's content with exa when completing cd
+#zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# switch group using `,` and `.`
+zstyle ':fzf-tab:*' switch-group ',' '.'
 
 # oh-my-zsh tmux plugin conf
 ZSH_TMUX_FIXTERM="true"
@@ -59,7 +71,7 @@ VI_MODE_SET_CURSOR=true
 # Also, some other plugin conflicts with the fzf keybindings, so fzf must be
 # loaded late
 plugins=(
-	colored-man-pages colorize dirhistory git macos macports vi-mode sudo zsh-autosuggestions zsh-completions z fzf zsh-syntax-highlighting)
+	colored-man-pages colorize dirhistory git macos macports vi-mode sudo zsh-autosuggestions zsh-completions z fzf fzf-tab zsh-syntax-highlighting)
 
 autoload -U compinit && compinit # reload completion, for zsh-completions
 
