@@ -1,3 +1,21 @@
+UNAME=`uname` # OS name, used later
+
+# Stuff for OS X
+if [ ${UNAME} = "Darwin" ]; then
+	# Prepend my bin directory and MacPorts directories to PATH, if needed
+	DIRS_TO_PREPEND_TO_PATH=/Users/matteo/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin
+	if [ ! `echo ${PATH} | grep -q ^${DIRS_TO_PREPEND_TO_PATH}` ]; then
+		PATH=${DIRS_TO_PREPEND_TO_PATH}:${PATH}
+	fi
+	# Add MacPorts paths as needed
+	export LIBRARY_PATH=/opt/local/lib
+	export C_INCLUDE_PATH=/opt/local/include/
+	export CPLUS_INCLUDE_PATH=/opt/local/include/
+	export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib
+	export CXX=clang++
+	export TEXINPUTS=.:/opt/local/share/texmf//:
+fi
+
 # Check for updates to oh-my-zsh every day, and ask to update.
 zstyle ':omz:update' frequency 1
 zstyle ':omz:update' mode reminder
@@ -86,24 +104,6 @@ export LESS=XFRmE
 # Use ssh for rsync and svn (I don't really use svn anymore but...)
 export RSYNC_RSH=ssh
 export SVN_RSH=ssh
-
-UNAME=`uname` # OS name, used later
-
-# Stuff for OS X
-if [ ${UNAME} = "Darwin" ]; then
-	# Prepend my bin directory and MacPorts directories to PATH, if needed
-	DIRS_TO_PREPEND_TO_PATH=/Users/matteo/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin
-	if [ ! `echo ${PATH} | grep -q ^${DIRS_TO_PREPEND_TO_PATH}` ]; then
-		PATH=${DIRS_TO_PREPEND_TO_PATH}:${PATH}
-	fi
-	# Add MacPorts paths as needed
-	export LIBRARY_PATH=/opt/local/lib
-	export C_INCLUDE_PATH=/opt/local/include/
-	export CPLUS_INCLUDE_PATH=/opt/local/include/
-	export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib
-	export CXX=clang++
-	export TEXINPUTS=.:/opt/local/share/texmf//:
-fi
 
 # Setup GPG and, if needed, SSH agent through GPG
 export GPG_TTY=$(tty)
