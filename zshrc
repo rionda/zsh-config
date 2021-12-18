@@ -1,3 +1,6 @@
+# Check for updates to oh-my-zsh every day, and ask to update.
+zstyle ':omz:update' frequency 1
+zstyle ':omz:update' mode reminder
 # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -9,11 +12,6 @@ export ZSH_THEME="gentoo-rionda"
 
 # Set to this to use case-sensitive completion
 # export CASE_SENSITIVE="true"
-
-# Comment this out to disable bi-weekly auto-update checks
-#export DISABLE_AUTO_UPDATE="true"
-# Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=1
 
 # Uncomment following line if you want to disable colors in ls
 # export DISABLE_LS_COLORS="true"
