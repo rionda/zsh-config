@@ -13,6 +13,8 @@ if [ ${UNAME} = "Darwin" ]; then
 	export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib
 	export CXX=clang++
 	export TEXINPUTS=.:/opt/local/share/texmf//:
+
+	export LC_ALL="en_US.UTF-8"
 fi
 
 # Check for updates to oh-my-zsh every day, and ask to update.
