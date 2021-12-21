@@ -2,11 +2,10 @@ UNAME=`uname` # OS name, used later
 
 # Stuff for OS X
 if [ ${UNAME} = "Darwin" ]; then
-	# Prepend my bin directory and MacPorts directories to PATH, if needed
-	DIRS_TO_PREPEND_TO_PATH=/Users/matteo/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin
-	if [ ! `echo ${PATH} | grep -q ^${DIRS_TO_PREPEND_TO_PATH}` ]; then
-		PATH=${DIRS_TO_PREPEND_TO_PATH}:${PATH}
-	fi
+	# /etc/zprofile calls /usr/libexec/path_helper, which messes up the order of
+	# directories. Then ~/.zprofile come in and adds duplicates. Rather than
+	# playing tricks, we just set PATH directly the way we want it.
+	PATH=/Users/matteo/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/TeX/texbin:/Library/Apple/usr/bin/
 	# Add MacPorts paths as needed
 	export LIBRARY_PATH=/opt/local/lib
 	export C_INCLUDE_PATH=/opt/local/include/
@@ -91,7 +90,6 @@ plugins=(
 
 autoload -U compinit && compinit # reload completion, for zsh-completions
 
-source /etc/profile
 source $ZSH/oh-my-zsh.sh
 
 export EDITOR=vim
