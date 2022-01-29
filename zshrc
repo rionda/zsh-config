@@ -75,7 +75,10 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 # oh-my-zsh tmux plugin conf
 ZSH_TMUX_FIXTERM="true"
 ZSH_TMUX_UNICODE="true"
-ZSH_TMUX_AUTOSTART="true"
+# Automatically start tmux when not on a remote host
+if [ ! -n "$SSH_TTY" ]; then
+	ZSH_TMUX_AUTOSTART="true"
+fi
 
 # oh-my-zsh zsh-autosuggestions plugin conf
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue"
