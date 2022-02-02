@@ -2,10 +2,4 @@
 
 In part inspired by [Nico](https://github.com/nviennot/).
 
-## To install
-
-1. Clone and initialize submodules.
-
-2. [Install oh-my-zsh](https://ohmyz.sh/#install)
-
-3. Link `zshrc` as `~/.zshrc`.
+To install, look at `install.sh`, and run it if appropriate for you.
