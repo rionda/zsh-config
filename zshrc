@@ -52,8 +52,10 @@ unsetopt nomatch
 ZSH_CUSTOM=$HOME/zsh-config
 
 # fzf config
-export FZF_BASE="/opt/local/share/fzf/shell"
-export FZF_DEFAULT_COMMAND='/opt/local/bin/rg --files --hidden --glob "!.git/*"'
+if [ ${UNAME} = "Darwin" ]; then
+	export FZF_BASE="/opt/local/share/fzf/shell"
+	export FZF_DEFAULT_COMMAND='/opt/local/bin/rg --files --hidden --glob "!.git/*"'
+fi
 export FZF_TMUX=1
 # macports fzf suggest using the following, but instead we use the oh-my-zsh fzf
 # plugin
