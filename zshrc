@@ -73,6 +73,8 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 #zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 # switch group using `,` and `.`
 zstyle ':fzf-tab:*' switch-group ',' '.'
+# Use tmux popup to show the completions
+zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 
 # oh-my-zsh tmux plugin conf
 ZSH_TMUX_FIXTERM="true"
