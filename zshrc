@@ -1,5 +1,7 @@
 UNAME=`uname` # OS name, used later
 
+umask 0077
+
 # Stuff for OS X
 if [ ${UNAME} = "Darwin" ]; then
 	# /etc/zprofile calls /usr/libexec/path_helper, which messes up the order of
