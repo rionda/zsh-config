@@ -55,7 +55,6 @@ ZSH_CUSTOM=$HOME/zsh-config
 
 # fzf config
 if [ ${UNAME} = "Darwin" ]; then
-	export FZF_BASE="/opt/local/share/fzf/shell"
 	export FZF_DEFAULT_COMMAND='/opt/local/bin/rg --files --hidden --glob "!.git/*"'
 fi
 export FZF_TMUX=1
