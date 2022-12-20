@@ -42,7 +42,7 @@ export ZSH_THEME="gentoo-rionda"
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
-unsetopt correctall # Do not correct the command line arguments arguments
+unsetopt correctall # Do not correct the command line arguments
 # If a pattern for filename generation has no matches, leave it unchanged in the
 # argument list (setting nomatch would print an error instead)
 unsetopt nomatch
