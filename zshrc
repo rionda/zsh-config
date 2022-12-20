@@ -47,6 +47,11 @@ unsetopt correctall # Do not correct the command line arguments
 # argument list (setting nomatch would print an error instead)
 unsetopt nomatch
 
+# Turn off all beeps
+#unsetopt BEEP
+# Turn off autocomplete beeps (at least some)
+unsetopt LIST_BEEP
+
 # Uncomment the following line to display red dots whilst waiting for completion.
 #COMPLETION_WAITING_DOTS="true"
 
