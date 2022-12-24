@@ -87,7 +87,7 @@ ZSH_TMUX_FIXTERM="true"
 ZSH_TMUX_UNICODE="true"
 # Automatically start tmux when not on a remote host
 if [ ! -n "$SSH_TTY" ]; then
-	ZSH_TMUX_AUTOSTART="true"
+	#ZSH_TMUX_AUTOSTART="true"
 fi
 
 # oh-my-zsh zsh-autosuggestions plugin conf
@@ -176,6 +176,11 @@ fi
 alias cat=ccat # colorized cat
 alias less=cless # colorized less
 
+# kitty aliases
+if [ -e "${HOME}/.config/kitty/kittyaliases.zsh" ]; then
+	source "${HOME}/.config/kitty/kittyaliases.zsh"
+fi
+
 # host specific settings
 
 # Set the clang version
@@ -222,4 +227,4 @@ if [ ${HOSTNAME} = "pompeii" ]; then
 fi
 
 # Integration with iterm2. Does not work in tmux.
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+#test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
