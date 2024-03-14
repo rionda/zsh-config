@@ -4,14 +4,11 @@ function prompt_char {
 }
 
 function git_prompt {
-	if [[ "$(command git config --get oh-my-zsh.hide-status 2>/dev/null)" != "1" ]]; then
-		BRANCH=$(git_current_branch)
-		if [[ -n ${BRANCH} ]]; then
-			echo "$ZSH_THEME_GIT_PROMPT_PREFIX$BRANCH$(git_prompt_status)$ZSH_THEME_GIT_PROMPT_SUFFIX"
-		else
-			return 0
-		fi
+	if ! __git_prompt_git rev-parse --git-dir &> /dev/null \
+		|| [[ "$(__git_prompt_git config --get oh-my-zsh.hide-info 2>/dev/null)" == 1 ]]; then
+		return 0
 	fi
+	echo "${ZSH_THEME_GIT_PROMPT_PREFIX}$(git_current_branch)$(git_prompt_status)${ZSH_THEME_GIT_PROMPT_SUFFIX}"
 }
 
 # For root: (red,bold)root@hostname, For non-root: (green,bold)hostname
