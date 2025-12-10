@@ -216,6 +216,3 @@ if [ ${HOSTNAME} = "pompeii" ]; then
 	stty sane
 	ulimit -c unlimited
 fi
-
-# Integration with iterm2. Does not work in tmux.
-#test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
