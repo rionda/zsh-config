@@ -62,7 +62,6 @@ ZSH_CUSTOM=$HOME/zsh-config
 if [ ${UNAME} = "Darwin" ]; then
 	export FZF_DEFAULT_COMMAND='/opt/local/bin/rg --files --hidden --glob "!.git/*"'
 fi
-export FZF_TMUX=1
 # macports fzf suggest using the following, but instead we use the oh-my-zsh fzf
 # plugin
 #source /opt/local/share/fzf/shell/key-bindings.zsh
@@ -82,14 +81,6 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 # Use tmux popup to show the completions
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 
-# oh-my-zsh tmux plugin conf
-ZSH_TMUX_FIXTERM="true"
-ZSH_TMUX_UNICODE="true"
-# Automatically start tmux when not on a remote host
-if [ ! -n "$SSH_TTY" ]; then
-	#ZSH_TMUX_AUTOSTART="true"
-fi
-
 # oh-my-zsh zsh-autosuggestions plugin conf
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue"
 
@@ -101,7 +92,7 @@ VI_MODE_SET_CURSOR=true
 # Also, some other plugin conflicts with the fzf keybindings, so fzf must be
 # loaded late
 plugins=(
-	colored-man-pages colorize dirhistory git kitty macos macports vi-mode sudo tmux zsh-autosuggestions zsh-completions z fzf fzf-tab zsh-syntax-highlighting)
+	colored-man-pages colorize dirhistory git kitty macos macports vi-mode sudo zsh-autosuggestions zsh-completions z fzf fzf-tab zsh-syntax-highlighting)
 
 autoload -U compinit && compinit # reload completion, for zsh-completions
 
