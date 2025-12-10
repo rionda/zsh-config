@@ -92,7 +92,7 @@ VI_MODE_SET_CURSOR=true
 # Also, some other plugin conflicts with the fzf keybindings, so fzf must be
 # loaded late
 plugins=(
-	colored-man-pages colorize dirhistory git kitty macos macports vi-mode sudo zsh-autosuggestions zsh-completions z fzf fzf-tab zsh-syntax-highlighting)
+	colored-man-pages colorize dirhistory extract git kitty macos macports vi-mode sudo zsh-autosuggestions zsh-completions z fzf fzf-tab zsh-syntax-highlighting)
 
 autoload -U compinit && compinit # reload completion, for zsh-completions
 
