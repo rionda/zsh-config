@@ -88,11 +88,15 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=blue"
 VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
 VI_MODE_SET_CURSOR=true
 
+# alias-finder plugin conf
+zstyle ':omz:plugins:alias-finder' autoload yes
+zstyle ':omz:plugins:alias-finder' longer yes
+
 # zsh-syntax-highlighting *must* be the last plugin loaded.
 # Also, some other plugin conflicts with the fzf keybindings, so fzf must be
 # loaded late
 plugins=(
-	colored-man-pages colorize dirhistory extract git kitty macos macports vi-mode sudo zsh-autosuggestions zsh-completions z fzf fzf-tab zsh-syntax-highlighting)
+	alias-finder colored-man-pages colorize dirhistory extract git kitty macos macports vi-mode sudo zsh-autosuggestions zsh-completions z fzf fzf-tab zsh-syntax-highlighting)
 
 autoload -U compinit && compinit # reload completion, for zsh-completions
 
