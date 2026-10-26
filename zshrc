@@ -7,7 +7,7 @@ if [ ${UNAME} = "Darwin" ]; then
 	# /etc/zprofile calls /usr/libexec/path_helper, which messes up the order of
 	# directories. Then ~/.zprofile come in and adds duplicates. Rather than
 	# playing tricks, we just set PATH directly the way we want it.
-	PATH=/Users/matteo/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/TeX/texbin:/Library/Apple/usr/bin/
+	PATH=/Users/mriondato/.local/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/TeX/texbin:/Library/Apple/usr/bin/
 	# Add MacPorts paths as needed
 	export LIBRARY_PATH=/opt/local/lib
 	export C_INCLUDE_PATH=/opt/local/include/
