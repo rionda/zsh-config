@@ -159,6 +159,9 @@ ZSH_HIGHLIGHT_STYLES+=(
   assign                        'none'
 )
 
+# maven arguments: use a number of threads equal to 1.5 times the number of CPUs.
+export MAVEN_ARGS="-T 1.5C"
+
 # Bindings
 set -o vi # use vi bindings
 
